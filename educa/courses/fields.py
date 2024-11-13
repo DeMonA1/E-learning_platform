@@ -3,6 +3,11 @@ from django.db import models
 
 
 class OrderField(models.PositiveIntegerField):
+    """
+    This field to order objects with respect to other fields
+    and automatically assign an order value when no specific order
+    is provided.
+    """
     def __init__(self, for_fields=None, *args, **kwargs):
         self.for_fields = for_fields
         super().__init__(*args, **kwargs)
