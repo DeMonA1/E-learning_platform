@@ -43,3 +43,29 @@ class OrderedContent(BaseContent):
     
     def created_delta(self):
         return timezone.now() - self.created
+    
+
+
+from django.contrib.auth.models import User
+from courses.models import Subject, Course, Module
+
+user = User.objects.last()
+subject = Subject.objects.last()
+c1 = Course.objects.create(subject=subject, owner=user, title=
+                           'Course 1', slug='course1')
+m1 = Module.objects.create(course=c1, title='Module 1')
+m1.order  # 0
+
+m2 = Module.objects.create(course=c1, title='Module 2')
+m2.order  # 1
+
+m3 = Module.objects.create(course=c1, title='Module 3', order=5)
+m3.order    # 5
+
+m4 = Module.objects.create(course=c1, title='Module 4')
+m4.order    # 6
+
+c2 = Course.objects.create(subject=subject, title='Course 2', 
+                           slug='course2', owner=user)
+m5 = Module.objects.create(course=c2, title='Module 1')
+m5.order
