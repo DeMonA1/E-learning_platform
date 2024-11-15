@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load course %}
 
+<!-- Start from 1 instead of 0 -->
 {% block title %}
-    <!-- Start from 1 instead of 0 -->
     Module {{ module.order|add:1 }}: {{ module.title }}
 {% endblock title %}
 
