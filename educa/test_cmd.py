@@ -69,3 +69,8 @@ c2 = Course.objects.create(subject=subject, title='Course 2',
                            slug='course2', owner=user)
 m5 = Module.objects.create(course=c2, title='Module 1')
 m5.order
+
+
+
+from courses.models import Module
+Module.objects.latest('id').id      # 9
