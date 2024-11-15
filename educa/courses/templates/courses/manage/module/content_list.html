@@ -91,5 +91,22 @@
     const moduleOrderUrl = '{% url "module_order" %}';
 
     sortable('#modules', {forcePlaceholderSize: true,
-                            placeholderClass: 'placeholder'});
+                            placeholderClass: 'placeholder'}
+            )[0].addEventListener('sortupdate', function(e) {
+
+                modulesOrder = {};
+                var modules = document.querySelectorAll('#modules li');
+                modules.forEach(function (module, index) {
+                    // update module index; id from data-id
+                    modulesOrder[module.dataset.id] = index;
+                    // update index in HTML element, index starting from 1
+                    module.querySelector('.order').innerHTML = index + 1;
+                });
+                
+                // add new order to the HTTP request options
+                options['body'] = JSON.stringify(modulesOrder);
+
+                // send HTTP request
+                fetch(moduleOrderUrl, options)
+            });
 {% endblock domready %}
