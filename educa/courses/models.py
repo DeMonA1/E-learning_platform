@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.template.loader import render_to_string
 from .fields import OrderField
 
 # Create your models here.
@@ -95,6 +96,9 @@ class ItemBase(models.Model):
     def __str__(self):
         return self.title
     
+    def render(self):
+        return render_to_string(f'courses/content/{self._meta.model_name}.html',
+                                {'item': self})
 
 class Text(ItemBase):
     content = models.TextField()
