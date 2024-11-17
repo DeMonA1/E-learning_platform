@@ -322,3 +322,8 @@ ul#course-modules li:hover {
     padding-left: 0;
     padding-right: 0;
 }
+
+img {
+    width: auto;
+    height: auto;
+}
