@@ -10,6 +10,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from braces.views import CsrfExemptMixin, JsonRequestResponseMixin
 from .models import Course, Module, Content, Subject
+from students.forms import CourseEnrollForm
 from .forms import ModuleFormSet
 
 # Create your views here.
@@ -240,3 +241,10 @@ class CourseListView(TemplateResponseMixin, View):
 class CourseDetailView(DetailView):
     model = Course
     template_name = 'courses/course/detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # init hidden course field with the current Course obj
+        context['enroll_form'] = CourseEnrollForm(
+                                    initial={'course': self.object})
+        return context
