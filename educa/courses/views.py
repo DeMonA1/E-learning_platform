@@ -1,6 +1,7 @@
 from django.apps import apps
 from django.urls import reverse_lazy
 from django.db.models import Count
+from django.core.cache import cache
 from django.forms.models import modelform_factory
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic.list import ListView
@@ -226,8 +227,11 @@ class CourseListView(TemplateResponseMixin, View):
     
     def get(self, request, subject=None):
         # annotate adds additional field to each Course instance
-        subjects = Subject.objects.annotate(total_courses=
-                                            Count('courses'))
+        subjects = cache.get('all_subjects')
+        if not subjects:
+            subjects = Subject.objects.annotate(total_courses=
+                                                Count('courses'))
+            cache.set('all_subjects', subjects)
         courses = Course.objects.annotate(total_modules=
                                           Count('modules'))
         if subject:
