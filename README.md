@@ -14,3 +14,11 @@ docker run -it <--rm> --name memcached -p 11211:11211 memcached -m 64
 Caching system can be configured using CACHES settings. In our case:
 - LOCATION - the location of the cache, depends on backend(dir, host and port);
 - BACKEND - cache backend.
+
+
+Django Toolbar.
+1. Add to INSTALLED_APPS.
+2. Add to MIDDLEWARE before any other middleware, except that encodes
+the response's content.
+3. Add INTERNAL_IPS and add to the list your local IP (toolbar will 
+only display on this IP address)
