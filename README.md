@@ -22,3 +22,7 @@ Django Toolbar.
 the response's content.
 3. Add INTERNAL_IPS and add to the list your local IP (toolbar will 
 only display on this IP address)
+
+Update and FetchFrom CacheMiddleware is used to site caching, but
+for our case, it's not appropriate way, because of content management
+views for instructors.
