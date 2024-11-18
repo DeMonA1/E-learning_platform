@@ -74,3 +74,16 @@ m5.order
 
 from courses.models import Module
 Module.objects.latest('id').id      # 9
+
+
+
+# CACHE
+# memcached should be launched
+from django.core.cache import cache
+cache.set('musician', 'Django', 20)
+cache.get('musician')
+
+# cache a queryset
+from courses.models import Subject
+subjects = Subject.objects.all()
+cache.set('my_subjects', subjects)

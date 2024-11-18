@@ -6,3 +6,11 @@ python manage.py dumpdata courses(name app) --indent=2(indentation) -> JSON in s
 python manage.py dumpdata courses --indent=2 --ouput=courses/fixtures/subjects.json -> to the file
 
 python manage.py loaddata subjects.json -> load data
+
+
+Using CACHE.
+docker run -it <--rm> --name memcached -p 11211:11211 memcached -m 64
+-m - limit memory 64MB
+Caching system can be configured using CACHES settings. In our case:
+- LOCATION - the location of the cache, depends on backend(dir, host and port);
+- BACKEND - cache backend.
