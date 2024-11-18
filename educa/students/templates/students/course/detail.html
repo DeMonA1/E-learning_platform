@@ -26,6 +26,7 @@
         </ul>
     </div>
     <div class="module">
+        <!-- timeout cache_name dynamic_var -->
         {% cache 600 module_contents module %}
             {% for content in module.contents.all %}
                 {% with item=content.item %}
