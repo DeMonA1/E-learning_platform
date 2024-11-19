@@ -87,3 +87,11 @@ cache.get('musician')
 from courses.models import Subject
 subjects = Subject.objects.all()
 cache.set('my_subjects', subjects)
+
+
+# serializer (DRF)
+from courses.models import Subject
+from courses.api.serializers import SubjectSerializer
+subject = Subject.objects.latest('id')
+serializer = SubjectSerializer(subject)
+serializer.data
