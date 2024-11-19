@@ -89,9 +89,20 @@ subjects = Subject.objects.all()
 cache.set('my_subjects', subjects)
 
 
+
 # serializer (DRF)
 from courses.models import Subject
 from courses.api.serializers import SubjectSerializer
 subject = Subject.objects.latest('id')
 serializer = SubjectSerializer(subject)
 serializer.data
+
+# parse data
+from io import BytesIO
+from rest_framework.parsers import JSONParser
+data = b'{"id": 4, "title": "Programming", "slug": "programming"}'
+JSONParser().parse(BytesIO(data))
+
+# render data
+from rest_framework.renderers import JSONRenderer
+JSONRenderer().render(serializer.data)
