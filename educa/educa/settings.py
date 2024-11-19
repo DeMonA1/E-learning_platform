@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'embed_video',
     'debug_toolbar',
     'redisboard',
+    'redis_framework',
 ]
 
 MIDDLEWARE = [
@@ -140,8 +141,14 @@ CACHES = {'default': {'BACKEND': 'django.core.cache.backends.redis.RedisCache',
                       'LOCATION': 'redis://127.0.0.1:6379',
 }}
 
+# django toolbar
 INTERNAL_IPS = ['127.0.0.1']
 
+# for site caching
 CACHE_MIDDLEWARE_ALIAS = 'default'
 CACHE_MIDDLEWARE_SECONDS = 60 * 15
 CACHE_MIDDLEWARE_KEY_PREFIX = 'educa'
+
+REST_FRAMEWORK = {'DEFAULT_PERMISSION_CLASSES': [
+    'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+]}
