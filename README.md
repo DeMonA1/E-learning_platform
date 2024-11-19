@@ -34,3 +34,7 @@ In order to monitor redist statistics, you need to install redisboard(requiremen
 On admin site you have to add URL: redis://localhost:6379/0, which
 means Redis instance running on localhost, on port 6379 and uses
 Redis db numbered 0.
+
+API
+Using curl for interaction.
+http://127.0.0.1:8000/api/subjects/ - list of subject or + id => detail

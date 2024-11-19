@@ -106,3 +106,9 @@ JSONParser().parse(BytesIO(data))
 # render data
 from rest_framework.renderers import JSONRenderer
 JSONRenderer().render(serializer.data)
+
+
+
+# consuming API
+# curl http://127.0.0.1:8000/api/subjects/
+# or curl http://127.0.0.1:8000/api/subjects/ | json_pp
