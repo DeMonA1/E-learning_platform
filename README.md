@@ -30,3 +30,7 @@ views for instructors.
 If you want to use Redis cache backend, change BACKEND and LOCATION
 settings on corresponding file and launch redis container:
     docker run -it <--rm> --name redis -p 6379:6379 redis
+In order to monitor redist statistics, you need to install redisboard(requirements). 
+On admin site you have to add URL: redis://localhost:6379/0, which
+means Redis instance running on localhost, on port 6379 and uses
+Redis db numbered 0.

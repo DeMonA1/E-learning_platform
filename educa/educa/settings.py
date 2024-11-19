@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'students.apps.StudentsConfig',
     'embed_video',
     'debug_toolbar',
+    'redisboard',
 ]
 
 MIDDLEWARE = [
