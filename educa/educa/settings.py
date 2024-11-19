@@ -135,8 +135,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 LOGIN_REDIRECT_URL = reverse_lazy('student_course_list')
 
-CACHES = {'default': {'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
-                      'LOCATION': '127.0.0.1:11211',
+CACHES = {'default': {'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+                      'LOCATION': 'redis://127.0.0.1:6379',
 }}
 
 INTERNAL_IPS = ['127.0.0.1']

@@ -26,3 +26,7 @@ only display on this IP address)
 Update and FetchFrom CacheMiddleware is used to site caching, but
 for our case, it's not appropriate way, because of content management
 views for instructors.
+
+If you want to use Redis cache backend, change BACKEND and LOCATION
+settings on corresponding file and launch redis container:
+    docker run -it <--rm> --name redis -p 6379:6379 redis
