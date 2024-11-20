@@ -38,3 +38,4 @@ Redis db numbered 0.
 API
 Using curl for interaction.
 http://127.0.0.1:8000/api/subjects/ - list of subject or + id => detail
+Pagination. You can pass parameters page and page_size for test in URL like: <http://127.0.0.1:8000/api/subjects/?page=2&page_size=2>
