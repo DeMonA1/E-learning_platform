@@ -118,3 +118,7 @@ from courses.api.serializers import CourseSerializer
 course = Course.objects.latest('id')
 serializer = CourseSerializer(course)
 JSONRenderer().render(serializer.data)
+
+# test authentication and permission
+# curl -i -X POST http://127.0.0.1:8000/api/courses/1/enroll/   # error (unauth)
+# curl -i -X POST -u student:password http://127.0.0.1:8000/api/courses/1/enroll/   # 200 OK {enrolled: True}
