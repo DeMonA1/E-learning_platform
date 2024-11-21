@@ -18,5 +18,7 @@ urlpatterns = [
 
      # ...:8000/api
      path('', include(router.urls)),
+     path('courses/<pk>/enroll/', views.CourseEnrollView.as_view(),
+          name='course_enroll'),
 
 ]
