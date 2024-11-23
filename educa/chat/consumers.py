@@ -6,6 +6,7 @@ class ChatConsumer(WebsocketConsumer):
     """
     Accepts any WebSocket connection and echoes to the
     WebSocket client every message it receives.
+    (like view in WSGI)
     """
     def connect(self):
         # accept connection
