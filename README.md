@@ -39,3 +39,14 @@ API
 Using curl for interaction.
 http://127.0.0.1:8000/api/subjects/ - list of subject or + id => detail
 Pagination. You can pass parameters page and page_size for test in URL like: <http://127.0.0.1:8000/api/subjects/?page=2&page_size=2>
+
+
+For chat server we need:
+1. Set up a consumer (read/write messages to a communication channel)
+2. Configure routing (allow us to combine and stack our consumers)
+3. Implement a WebSocket client (to connect to the WebSocket from browser 
+and send/receive messages using JS):
+- open WebSocket connection with the server when the page is loaded;
+- add messages to a HTML container when data is received through the WebSocket;
+- attach a listener to the submit button to send messages.
+4. Enable a channel layer (allow to talk between different instances of an app)

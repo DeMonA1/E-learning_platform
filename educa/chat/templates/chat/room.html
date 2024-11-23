@@ -14,7 +14,17 @@
 {% endblock content %}
 
 {% block include_js %}
+    <!--python obj as JSON in <script> tag, for safely using it with JS.
+    For example:
+    <script id="course-id" type="application/json">6</script>-->
+    {{ course.id|json_script:"course-id" }}
 {% endblock include_js %}
 
 {% block domready %}
+    const courseId = JSON.parse(
+        document.getElementById('course-id').textContent
+    );
+    const url = 'ws://' + window.location.host + '/ws/chat/room/' + 
+                courseId + '/';
+    const chatSocket = new WebSocket(url);
 {% endblock domready %}
