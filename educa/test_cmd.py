@@ -122,3 +122,12 @@ JSONRenderer().render(serializer.data)
 # test authentication and permission
 # curl -i -X POST http://127.0.0.1:8000/api/courses/1/enroll/   # error (unauth)
 # curl -i -X POST -u student:password http://127.0.0.1:8000/api/courses/1/enroll/   # 200 OK {enrolled: True}
+
+
+
+# test channel layer (Redis)
+import channels.layers
+from asgiref.sync import async_to_sync
+channel_layer = channels.layers.get_channel_layer()
+async_to_sync(channel_layer.send)('test_channel', {'message': 'hello'})
+async_to_sync(channel_layer.receive)('test_channel')    # {'message': 'hello'}
