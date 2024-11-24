@@ -21,10 +21,25 @@
 {% endblock include_js %}
 
 {% block domready %}
+    // set up the connection
     const courseId = JSON.parse(
         document.getElementById('course-id').textContent
     );
     const url = 'ws://' + window.location.host + '/ws/chat/room/' + 
                 courseId + '/';
     const chatSocket = new WebSocket(url);
+
+    
+    chatSocket.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+        const chat = document.getElementById('chat');
+
+        chat.innerHTML += '<div class="message">' +
+                            data.message + '</div>';
+        chat.scrollTop = chat.scrollHeight;
+    };
+
+    chatSocket.onclose = function(event) {
+        console.error('Chat socket closed unexpectedly');
+    };
 {% endblock domready %}
