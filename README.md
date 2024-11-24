@@ -41,7 +41,7 @@ http://127.0.0.1:8000/api/subjects/ - list of subject or + id => detail
 Pagination. You can pass parameters page and page_size for test in URL like: <http://127.0.0.1:8000/api/subjects/?page=2&page_size=2>
 
 
-For chat server we need:
+For chat(<http://127.0.0.1:8000/chat/room/1/>) server we need:
 1. Set up a consumer (read/write messages to a communication channel)
 2. Configure routing (allow us to combine and stack our consumers)
 3. Implement a WebSocket client (to connect to the WebSocket from browser 

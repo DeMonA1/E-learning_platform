@@ -1,6 +1,7 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from django.utils import timezone
+from chat.models import Message
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -28,6 +29,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.room_group_name, self.channel_name
         )
 
+    async def persist_message(self, message):
+        # send message to WebSocket
+        await Message.objects.acreate(user=self.user, course_id=self.id,
+                                      content=message)
+
     # receive message from WebSocket
     async def receive(self, text_data):
         text_data_json: dict = json.loads(text_data)
@@ -42,7 +48,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
                                    'user': self.user.username,
                                    'datetime': now.isoformat()}
         )
-        
+        # persist message
+        await self.persist_message(message)
+
     # receive message from room group
     async def chat_message(self, event):
         # send message to WebSocket
