@@ -49,6 +49,9 @@ and send/receive messages using JS):
 - open WebSocket connection with the server when the page is loaded;
 - add messages to a HTML container when data is received through the WebSocket;
 - attach a listener to the submit button to send messages.
+Should be HTTP .... 200;
+    Websocket HANDSHAKING;
+    WEBSOCKET CONNECT;
 4. Enable a channel layer (allow to talk between different instances of an app). We have used Redis to implement channel layers.
 Add to the settings.py CHANNEL_LAYERS setting (RedisChannelLayer backend,
 host 127.0.0.1 and port 6379). Next, run the container

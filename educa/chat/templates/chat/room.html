@@ -18,12 +18,16 @@
     For example:
     <script id="course-id" type="application/json">6</script>-->
     {{ course.id|json_script:"course-id" }}
+    {{ request.user.username|json_script:"request-user" }}
 {% endblock include_js %}
 
 {% block domready %}
     // set up the connection
     const courseId = JSON.parse(
         document.getElementById('course-id').textContent
+    );
+    const requestUser = JSON.parse(
+        document.getElementById('request-user').textContent
     );
     const url = 'ws://' + window.location.host + '/ws/chat/room/' + 
                 courseId + '/';
@@ -35,8 +39,16 @@
         const data = JSON.parse(event.data);
         const chat = document.getElementById('chat');
 
-        chat.innerHTML += '<div class="message">' +
-                            data.message + '</div>';
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options
+        const dateOptions = {hour: 'numeric', minute: 'numeric', hour12: true};
+        const datetime = new Date(data.datetime).toLocaleString('en', dateOptions);
+        const isMe = data.user === requestUser;
+        const source = isMe ? 'me' : 'other';
+        const name = isMe ? 'Me' : data.user;
+
+        chat.innerHTML += '<div class="message ' + source '">' +
+                            '<strong>' + name + '</strong> ' +
+                            '<span class="date">' + datetime + '</span><br>' + data.message + '</div>';
         chat.scrollTop = chat.scrollHeight;
     };
 
