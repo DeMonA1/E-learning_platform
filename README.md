@@ -56,3 +56,4 @@ Should be HTTP .... 200;
 Add to the settings.py CHANNEL_LAYERS setting (RedisChannelLayer backend,
 host 127.0.0.1 and port 6379). Next, run the container
     docker run -it <--rm> --name redis -p 6379:6379 redis
+In order to test chat, open browser another tab in private mode.
