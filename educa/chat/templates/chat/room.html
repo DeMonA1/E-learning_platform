@@ -29,7 +29,8 @@
                 courseId + '/';
     const chatSocket = new WebSocket(url);
 
-    
+
+    // display new messages  
     chatSocket.onmessage = function(event) {
         const data = JSON.parse(event.data);
         const chat = document.getElementById('chat');
@@ -42,4 +43,19 @@
     chatSocket.onclose = function(event) {
         console.error('Chat socket closed unexpectedly');
     };
+
+    // send message through WebSocket by clicking on the button
+    const input = document.getElementById('chat-message-input');
+    const submitButton = document.getElementById('chat-message-submit');
+
+    submitButton.addEventListener('click', function(event) {
+        const message = input.value;
+        if(message) {
+            // send message in JSON format
+            chatSocket.send(JSON.stringify({'message': message}));
+            // clear input
+            input.value = '';
+            input.focus();
+        }
+    });
 {% endblock domready %}
