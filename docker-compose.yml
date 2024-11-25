@@ -1,7 +1,22 @@
 services:
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      
+
   web:
+  # use wait-for-it.sh to wait for db host be ready and accept
+  # connections on port 5432 before starting Django server
     build: .
-    command: python /code/educa/manage.py runserver 0.0.0.0:8000
+    command: ["./wait-for-it.sh", "db:5432", "--", 
+            "python", "/code/educa/manage.py", "runserver",
+             "0.0.0.0:8000"]
     restart: always
     volumes:
       - .:/code
@@ -9,4 +24,8 @@ services:
       - "8000:8000"
     environment:
       - DJANGO_SETTINGS_MODULE=educa.settings.prod
-      
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - db

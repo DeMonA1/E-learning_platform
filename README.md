@@ -69,3 +69,14 @@ variable. For Linux execute the following command in the shell:
     export DJANGO_SETTINGS_MODULE=educa.settings.local
 or for Windows:
     set DJANGO_SETTINGS_MODULE=educa.settings.local
+
+
+In order to docker compose up:
+1. Use wait-for-it.sh to wait for db host be ready and accept
+connections on port 5432 before starting Django server.
+2. Grant permission to it:
+    chmod +x wait-for-it.sh
+3. When you launch web and db services, you have to apply migrations. Run the following command in the directory, where the docker-compose.yml file is located:
+    docker compose exec web python /code/educa/manage.py migrate
+4. Create a superuser:
+    docker compose exec web python /code/educa/manage.py createsuperuser
