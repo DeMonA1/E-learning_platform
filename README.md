@@ -57,3 +57,15 @@ Add to the settings.py CHANNEL_LAYERS setting (RedisChannelLayer backend,
 host 127.0.0.1 and port 6379). Next, run the container
     docker run -it <--rm> --name redis -p 6379:6379 redis
 In order to test chat, open browser another tab in private mode.
+
+
+
+Launch app with few settings files.
+To indicate the settings module that you want to use add --settings option:
+    python manage.py runserver --settings=educa.settings.local
+If you don't want to pass the --settings option eveery time you run 
+a management command, you can define the DJANGO_SETTINGS_MODULE env
+variable. For Linux execute the following command in the shell:
+    export DJANGO_SETTINGS_MODULE=educa.settings.local
+or for Windows:
+    set DJANGO_SETTINGS_MODULE=educa.settings.local
