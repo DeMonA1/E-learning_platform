@@ -162,3 +162,6 @@ cython_debug/
 #.idea/
 educa/media/files/Goethe-Zertifikat_B1_Wortliste.pdf
 educa/media/images/black-tea.jpeg
+
+# docker volumes files
+data/
