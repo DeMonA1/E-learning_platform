@@ -68,6 +68,11 @@ h1 {
     color: #fff;
 }
 
+#header .mine {
+    float: left;
+    padding: 6px 100px;
+}
+
 #header .menu {
     list-style: none;
     float: right;

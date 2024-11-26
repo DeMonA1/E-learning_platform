@@ -1,5 +1,8 @@
 # E-learning_platform
 
+python manage.py runserver (run Redis container before that)
+
+
 About fixtures.
 python manage.py dumpdata courses(name app) --indent=2(indentation) -> JSON in standart output
 
