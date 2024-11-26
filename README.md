@@ -76,7 +76,21 @@ In order to docker compose up:
 connections on port 5432 before starting Django server.
 2. Grant permission to it:
     chmod +x wait-for-it.sh
-3. When you launch web and db services, you have to apply migrations. Run the following command in the directory, where the docker-compose.yml file is located:
+3. When you launch web and db services, you have to apply
+migrations. Run the following command in the directory, where
+the docker-compose.yml file is located:
     docker compose exec web python /code/educa/manage.py migrate
 4. Create a superuser:
     docker compose exec web python /code/educa/manage.py createsuperuser
+
+
+We will use uWSGI as a server and NGINX server in front of it
+for serving static files efficiently and we will forward dynamic
+requests to uWSGI workers. After implementation uWSGI with NGINX
+we can access to server by <http://localhost/>, because we are
+accessing the host through the standard HTTP port 80.
+
+Add following line to /etc/hosts file:
+    127.0.0.1	educaproject.com www.educaproject.com
+By doing so, you are routing the upper 2 hostnames to our local
+server.

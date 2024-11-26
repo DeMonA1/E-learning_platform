@@ -23,8 +23,7 @@ services:
   # connections on port 5432 before starting Django server
     build: .
     command: ["./wait-for-it.sh", "db:5432", "--", 
-            "python", "/code/educa/manage.py", "runserver",
-             "0.0.0.0:8000"]
+            "uwsgi", "--ini", "/code/config/uwsgi/uwsgi.ini"]
     restart: always
     volumes:
       - .:/code
@@ -38,3 +37,13 @@ services:
     depends_on:
       - db
       - cache
+
+  nginx:
+    image: nginx
+    restart: always
+    volumes:
+      - ./config/nginx:/etc/nginx/templates
+      - .:/code
+    ports:
+      - "80:80"
+      

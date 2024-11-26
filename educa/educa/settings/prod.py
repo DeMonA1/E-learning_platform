@@ -6,7 +6,7 @@ DEBUG = False
 
 ADMINS = [('Dzmitry', 'admin@email.com')]   # (name, email)
 
-ALLOWED_HOSTS = ['*']   # all hosts
+ALLOWED_HOSTS = ['educaproject.com', 'www.educaproject.com']   # all hosts
 
 DATABASES = {'default': {'ENGINE': 'django.db.backends.postgresql',
                          'NAME': config('POSTGRES_DB'),
