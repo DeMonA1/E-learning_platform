@@ -113,3 +113,11 @@ common problems. Launch check:
     python manage.py check --settings=educa.settings.prod
 For production deployment:
     python manage.py check --deploy --settings=educa.settings.prod
+
+
+SSL/TLS
+Generate SSL/TLS certificate:
+    openssl req -x509 -newkey rsa:2048 -sha256 -days 3650 -nodes \
+    -keyout ssl/educa.key -out ssl/educa.crt \
+    -subj '/CN=*.educaproject.com' \
+    -addext 'subjectAltName=DNS:*.educaproject.com'
