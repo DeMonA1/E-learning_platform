@@ -104,3 +104,12 @@ In order to collect all of static files:
     python manage.py collectstatic --settings=educa.settings.local
 Thus /static/ and /media/ paths are now served by NGINX directly,
 / path are passed by NGINX to uWSGI through the UNIX socket.
+
+
+Checking.
+Django includes a system check framework for valdating our project,
+that inspects the applications installed in Django project and detects
+common problems. Launch check:
+    python manage.py check --settings=educa.settings.prod
+For production deployment:
+    python manage.py check --deploy --settings=educa.settings.prod
