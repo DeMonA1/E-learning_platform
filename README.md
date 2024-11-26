@@ -94,3 +94,13 @@ Add following line to /etc/hosts file:
     127.0.0.1	educaproject.com www.educaproject.com
 By doing so, you are routing the upper 2 hostnames to our local
 server.
+
+We use NGINX to server static files in our production environment.
+In order to collect all of static files:
+1. Add STATIC_ROOT directory to base.py file.
+2. docker compose up
+3. docker compose exec web python /code/educa/manage.py collectstatic 
+    or 
+    python manage.py collectstatic --settings=educa.settings.local
+Thus /static/ and /media/ paths are now served by NGINX directly,
+/ path are passed by NGINX to uWSGI through the UNIX socket.
