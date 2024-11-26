@@ -23,7 +23,7 @@ django_asgi_app = get_asgi_application()
 from chat.routing import websocket_urlpatterns
 
 # this middleware supports standard Django auth (user details 
-# store in the session)
+# store in the session) and WebSocket checks ALLOWED_HOSTS
 application = ProtocolTypeRouter({'http': django_asgi_app,
                                   'websocket': AllowedHostsOriginValidator(
                                         AuthMiddlewareStack(URLRouter(websocket_urlpatterns))),
