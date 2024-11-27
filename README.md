@@ -124,3 +124,9 @@ Generate SSL/TLS certificate:
     -keyout ssl/educa.key -out ssl/educa.crt \
     -subj '/CN=*.educaproject.com' \
     -addext 'subjectAltName=DNS:*.educaproject.com'
+
+
+Subdomain (subdomain.educaproject.com)
+For testing custom middleware with a Course object with the slug first,
+add the following line to /etc/hosts file:
+    127.0.0.1 first.educaproject.com
