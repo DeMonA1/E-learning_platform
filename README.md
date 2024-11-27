@@ -130,3 +130,17 @@ Subdomain (subdomain.educaproject.com)
 For testing custom middleware with a Course object with the slug first,
 add the following line to /etc/hosts file:
     127.0.0.1 first.educaproject.com
+
+
+Send masss reminder to users by email.
+In order to make Django output emails to the standard ouput during
+development, add it to base.py file:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+Management command in container:
+    docker compose exec web python /code/educa/manage.py \
+    enroll_reminder --days=20 --settings=educa.settings.prod
+We can run management commands from code as follows:
+    from django.core import management
+    management.call_command('enroll_reminder', days=20)
+Django management command can be scheduled to run automatically
+using cron or Celery Beat.
