@@ -2,11 +2,13 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, FormView
 from courses.models import Course
 from .forms import CourseEnrollForm
+from .utils import get_redis_connection
 
 # Create your views here.
 
@@ -64,12 +66,25 @@ class StudentCourseDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         # get course object
         course = self.get_object()
+        redis_conn = get_redis_connection()
+
+        # init the Redis key for the student
+        redis_key = f'modules_accessed:{self.request.user.id}'
+        
         if 'module_id' in self.kwargs:
-            # get current module
-            context['module'] = course.modules.get(
-                id=self.kwargs['module_id']
-            )
+            module_id = self.kwargs['module_id']
+            context['module'] = get_object_or_404(
+                course.modules.all(), id=module_id)
+            
+            # store accessed module ID in Redis
+            redis_conn.sadd(redis_key, module_id)
         else:
-            # get first module
-            context['module'] = course.modules.all()[0]
+            module_first = course.modules.first()
+            context['module'] = module_first
+            redis_conn.sadd(redis_key, module_first.id)
+        
+        # fetch all modules accessed by the student
+        accessed_modules = redis_conn.smembers(redis_key)
+        # bytes to int
+        context['accessed_modules'] = [int(m) for m in accessed_modules]
         return context

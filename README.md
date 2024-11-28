@@ -2,6 +2,8 @@
 
 python manage.py runserver (run Redis container before that)
 
+127.0.0.1 or <https://(www).educaproject.com>(on compose)
+
 
 About fixtures.
 python manage.py dumpdata courses(name app) --indent=2(indentation) -> JSON in standart output
@@ -144,3 +146,6 @@ We can run management commands from code as follows:
     management.call_command('enroll_reminder', days=20)
 Django management command can be scheduled to run automatically
 using cron or Celery Beat.
+
+For local tests, you need to comment subdomain_course_middleware in 
+MIDDLEWARE constant in base.py settings file.

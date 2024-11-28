@@ -332,3 +332,7 @@ img {
     width: 210px;
     height: 180px;
 }
+
+.contents ul li.accessed {
+    background: #232829;
+}

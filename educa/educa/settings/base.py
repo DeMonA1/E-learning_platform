@@ -59,7 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'courses.middleware.subdomain_course_middleware',
+    #'courses.middleware.subdomain_course_middleware',
 ]
 
 ROOT_URLCONF = 'educa.urls'
@@ -157,3 +157,7 @@ CHANNEL_LAYERS = {'default': {'BACKEND': 'channels_redis.core.RedisChannelLayer'
                               'CONFIG': {'hosts': [('127.0.0.1', 6379)]}}}
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+REDIS_HOST = 'cache'        # localhost without docker compose
+REDIS_PORT = 6379
+REDIS_DB = 0
