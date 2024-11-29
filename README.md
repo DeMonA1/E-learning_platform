@@ -94,8 +94,9 @@ server.
 We use NGINX to server static files in our production environment.
 In order to collect all of static files:
 1. Add ***STATIC_ROOT*** directory to the ***base.py*** file.
-2. ```docker compose up```
-3. docker compose exec web python /code/educa/manage.py collectstatic 
+2.```
+docker compose up```
+4. docker compose exec web python /code/educa/manage.py collectstatic 
     or 
     python manage.py collectstatic --settings=educa.settings.local
 Thus /static/ and /media/ paths are now served by NGINX directly,
