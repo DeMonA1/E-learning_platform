@@ -42,17 +42,16 @@ Caching system can be configured using ***CACHES*** settings. In our case:
 - LOCATION - the location of the cache, depends on backend(dir, host and port);
 - BACKEND - cache backend.
 
-
-Django Toolbar.
-1. Add to INSTALLED_APPS.
-2. Add to MIDDLEWARE before any other middleware, except that encodes
+### :wrench: Django Toolbar.
+1. Add to ***INSTALLED_APPS***.
+2. Add to ***MIDDLEWARE*** before any other middleware, except that encodes
 the response's content.
-3. Add INTERNAL_IPS and add to the list your local IP (toolbar will 
+3. Add ***INTERNAL_IPS*** and add to the list your local IP (toolbar will 
 only display on this IP address)
-
-Update and FetchFrom CacheMiddleware is used to site caching, but
-for our case, it's not appropriate way, because of content management
-views for instructors.
+> [!NOTE]
+> UpdateCacheMiddleware and FetchFromCacheMiddleware is used to site caching, but
+> for our case, it's not appropriate way, because of content management
+> views for instructors.
 
 If you want to use Redis cache backend, change BACKEND and LOCATION
 settings on corresponding file and launch redis container:
