@@ -5,9 +5,9 @@
 
 ## :hammer_and_pick: Launch service
 1. [Redis (docker container)](https://github.com/DeMonA1/Shop/blob/main/README.md#redis):
-   ```
-    docker run --it --name redis -p 6379:6379 redis
-   ```
+```
+ docker run --it --name redis -p 6379:6379 redis
+```
 2. Run server:
 ```
 python manage.py runserver
@@ -16,18 +16,29 @@ python manage.py runserver
 > as well as by a subdomain (in compose).
 
 
-About fixtures.
-python manage.py dumpdata courses(name app) --indent=2(indentation) -> JSON in standart output
+## :notebook_with_decorative_cover: About fixtures.
+- Generate JSON serialized data:
+```
+python manage.py dumpdata courses(name app) --indent=2(indentation)
+```
+- If you want to save data in the specific file:
+```
+python manage.py dumpdata courses --indent=2 --ouput=courses/fixtures/subjects.json
+```
+- In order to load data from JSON ot DB:
+```
+python manage.py loaddata subjects.json
+```
 
-python manage.py dumpdata courses --indent=2 --ouput=courses/fixtures/subjects.json -> to the file
-
-python manage.py loaddata subjects.json -> load data
-
-
-Using CACHE.
+## :gear: Necessary services
+### :card_file_box: Cache
+You can use for cache Memcached, run it as follow:
+```
 docker run -it <--rm> --name memcached -p 11211:11211 memcached -m 64
--m - limit memory 64MB
-Caching system can be configured using CACHES settings. In our case:
+```
+> -m => limit memory 64MB
+
+Caching system can be configured using ***CACHES*** settings. In our case:
 - LOCATION - the location of the cache, depends on backend(dir, host and port);
 - BACKEND - cache backend.
 
