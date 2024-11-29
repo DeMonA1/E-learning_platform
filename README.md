@@ -32,6 +32,7 @@ python manage.py loaddata subjects.json
 
 ## :gear: Necessary services
 ### :card_file_box: Cache
+<ins>***Memcached***</ins>
 You can use for cache Memcached, run it as follow:
 ```
 docker run -it <--rm> --name memcached -p 11211:11211 memcached -m 64
@@ -41,6 +42,17 @@ docker run -it <--rm> --name memcached -p 11211:11211 memcached -m 64
 Caching system can be configured using ***CACHES*** settings. In our case:
 - LOCATION - the location of the cache, depends on backend(dir, host and port);
 - BACKEND - cache backend.
+
+<ins>***Redis***</ins>
+If you want to use Redis cache backend, change ***BACKEND*** and ***LOCATION***
+settings on corresponding file and launch redis container:
+```
+    docker run -it <--rm> --name redis -p 6379:6379 redis
+```
+In order to monitor redis statistics, you need to install redisboard(requirements). 
+On admin site you have to add URL: <ins>***redis://localhost:6379/0***</ins>, which
+means Redis instance running on localhost, on port 6379 and uses
+Redis db numbered 0.
 
 ### :wrench: Django Toolbar.
 1. Add to ***INSTALLED_APPS***.
@@ -53,18 +65,11 @@ only display on this IP address)
 > for our case, it's not appropriate way, because of content management
 > views for instructors.
 
-If you want to use Redis cache backend, change BACKEND and LOCATION
-settings on corresponding file and launch redis container:
-    docker run -it <--rm> --name redis -p 6379:6379 redis
-In order to monitor redist statistics, you need to install redisboard(requirements). 
-On admin site you have to add URL: redis://localhost:6379/0, which
-means Redis instance running on localhost, on port 6379 and uses
-Redis db numbered 0.
-
-API
-Using curl for interaction.
-http://127.0.0.1:8000/api/subjects/ - list of subject or + id => detail
-Pagination. You can pass parameters page and page_size for test in URL like: <http://127.0.0.1:8000/api/subjects/?page=2&page_size=2>
+## About API
+- Using curl for interaction.
+- http://127.0.0.1:8000/api/subjects/ - list of subject or + id => detail
+- Pagination. You can pass parameters ***page*** and ***page_size*** for test
+in URL like: <http://127.0.0.1:8000/api/subjects/?page=2&page_size=2>
 
 
 For chat(<http://127.0.0.1:8000/chat/room/1/>) server we need:
