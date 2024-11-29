@@ -68,8 +68,7 @@ only display on this IP address)
 ## About API
 - Using curl for interaction.
 - http://127.0.0.1:8000/api/subjects/ - list of subject or + id => detail
-- Pagination. You can pass parameters ***page*** and ***page_size*** for test
-in URL like: <http://127.0.0.1:8000/api/subjects/?page=2&page_size=2>
+- Pagination. You can pass parameters ***page*** and ***page_size*** for test in URL like: <http://127.0.0.1:8000/api/subjects/?page=2&page_size=2>
 
 
 For chat(<http://127.0.0.1:8000/chat/room/1/>) server we need:
