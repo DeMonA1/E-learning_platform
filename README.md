@@ -8,10 +8,22 @@
 ```
  docker run --it --name redis -p 6379:6379 redis
 ```
-2. Run server:
+2. Launch app with few settings files.
+To indicate the settings module that you want to use add ***--settings*** option:
 ```
-python manage.py runserver
+python manage.py runserver --settings=educa.settings.local
 ```
+If you don't want to pass the ***--settings*** option eveery time you run 
+a management command, you can define the ***DJANGO_SETTINGS_MODULE*** env
+variable. For Linux execute the following command in the shell:
+```
+export DJANGO_SETTINGS_MODULE=educa.settings.local
+```
+or for Windows:
+```
+set DJANGO_SETTINGS_MODULE=educa.settings.local
+```
+
 > You can get access by <http://127.0.0.1:8000> or <https://(www).educaproject.com>(on compose),
 > as well as by a subdomain (in compose).
 
@@ -94,31 +106,24 @@ Add to the ***settings.py*** **CHANNEL_LAYERS** setting ('BACKEND': 'channels_re
 ```
 - [x] In order to test chat, open browser another tab in private mode.
 
-
-
-Launch app with few settings files.
-To indicate the settings module that you want to use add --settings option:
-    python manage.py runserver --settings=educa.settings.local
-If you don't want to pass the --settings option eveery time you run 
-a management command, you can define the DJANGO_SETTINGS_MODULE env
-variable. For Linux execute the following command in the shell:
-    export DJANGO_SETTINGS_MODULE=educa.settings.local
-or for Windows:
-    set DJANGO_SETTINGS_MODULE=educa.settings.local
-
-
+## Docker compose
 In order to docker compose up:
-1. Use wait-for-it.sh to wait for db host be ready and accept
+1. Use <ins>***wait-for-it.sh***</ins> to wait for db host be ready and accept
 connections on port 5432 before starting Django server.
 2. Grant permission to it:
-    chmod +x wait-for-it.sh
+```
+chmod +x wait-for-it.sh
+```
 3. When you launch web and db services, you have to apply
 migrations. Run the following command in the directory, where
-the docker-compose.yml file is located:
-    docker compose exec web python /code/educa/manage.py migrate
+the ***docker-compose.yml*** file is located:
+```
+docker compose exec web python /code/educa/manage.py migrate
+```
 4. Create a superuser:
-    docker compose exec web python /code/educa/manage.py createsuperuser
-
+```
+docker compose exec web python /code/educa/manage.py createsuperuser
+```
 
 We will use uWSGI as a server and NGINX server in front of it
 for serving static files efficiently and we will forward dynamic
