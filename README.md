@@ -1,8 +1,19 @@
 # E-learning_platform
 
-python manage.py runserver (run Redis container before that)
+> [!TIP]
+> [Main Django commands](https://github.com/DeMonA1/MyBlog__Django/blob/main/README.md#diamonds-basic-django-commands)
 
-127.0.0.1 or <https://(www).educaproject.com>(on compose)
+## :hammer_and_pick: Launch service
+1. [Redis (docker container)](https://github.com/DeMonA1/Shop/blob/main/README.md#redis):
+   ```
+    docker run --it --name redis -p 6379:6379 redis
+   ```
+2. Run server:
+```
+python manage.py runserver
+```
+> You can get access by <http://127.0.0.1:8000> or <https://(www).educaproject.com>(on compose),
+> as well as by a subdomain (in compose).
 
 
 About fixtures.
