@@ -82,7 +82,9 @@ and send/receive messages using JS):
 - attach a listener to the submit button to send messages.
 > [!NOTE]
 > Should be HTTP .... 200;
+> 
 >    Websocket HANDSHAKING;
+>
 >    WEBSOCKET CONNECT;
 4. Enable a channel layer (allow to talk between different instances of an app). We have used Redis to implement channel layers.
 Add to the ***settings.py*** **CHANNEL_LAYERS** setting ('BACKEND': 'channels_redis.core.RedisChannelLayer',
