@@ -69,10 +69,9 @@ only display on this IP address)
 - Using curl for interaction.
 - http://127.0.0.1:8000/api/subjects/ - list of subject or + id => detail
 - Pagination. You can pass parameters ***page*** and ***page_size*** for test in URL like:
-  
 <http://127.0.0.1:8000/api/subjects/?page=2&page_size=2>
 
-
+## About Chat server
 For chat(<http://127.0.0.1:8000/chat/room/1/>) server we need:
 1. Set up a consumer (read/write messages to a communication channel)
 2. Configure routing (allow us to combine and stack our consumers)
@@ -81,14 +80,17 @@ and send/receive messages using JS):
 - open WebSocket connection with the server when the page is loaded;
 - add messages to a HTML container when data is received through the WebSocket;
 - attach a listener to the submit button to send messages.
-Should be HTTP .... 200;
-    Websocket HANDSHAKING;
-    WEBSOCKET CONNECT;
+> [!NOTE]
+> Should be HTTP .... 200;
+>    Websocket HANDSHAKING;
+>    WEBSOCKET CONNECT;
 4. Enable a channel layer (allow to talk between different instances of an app). We have used Redis to implement channel layers.
-Add to the settings.py CHANNEL_LAYERS setting (RedisChannelLayer backend,
-host 127.0.0.1 and port 6379). Next, run the container
+Add to the ***settings.py*** **CHANNEL_LAYERS** setting ('BACKEND': 'channels_redis.core.RedisChannelLayer',
+'CONFIG': {'hosts': [('127.0.0.1', 6379)). Next, run the container as follows:
+```
     docker run -it <--rm> --name redis -p 6379:6379 redis
-In order to test chat, open browser another tab in private mode.
+```
+- [x] In order to test chat, open browser another tab in private mode.
 
 
 
