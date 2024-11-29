@@ -77,6 +77,30 @@ only display on this IP address)
 > for our case, it's not appropriate way, because of content management
 > views for instructors.
 
+### NGINX and uWSGI
+We will use ***uWSGI*** as a server and ***NGINX*** server in front of it
+for serving static files efficiently and we will forward dynamic
+requests to uWSGI workers. After implementation uWSGI with NGINX
+we can access to server by <http://localhost/>, because we are
+accessing the host through the standard HTTP port 80.
+
+Add following line to <ins>***/etc/hosts***</ins> file:
+```
+127.0.0.1	educaproject.com www.educaproject.com
+```
+By doing so, you are routing the upper 2 hostnames to our local
+server.
+
+We use NGINX to server static files in our production environment.
+In order to collect all of static files:
+1. Add ***STATIC_ROOT*** directory to the ***base.py*** file.
+2. ```docker compose up```
+3. docker compose exec web python /code/educa/manage.py collectstatic 
+    or 
+    python manage.py collectstatic --settings=educa.settings.local
+Thus /static/ and /media/ paths are now served by NGINX directly,
+/ path are passed by NGINX to uWSGI through the UNIX socket.
+
 ## About API
 - Using curl for interaction.
 - http://127.0.0.1:8000/api/subjects/ - list of subject or + id => detail
@@ -125,26 +149,7 @@ docker compose exec web python /code/educa/manage.py migrate
 docker compose exec web python /code/educa/manage.py createsuperuser
 ```
 
-We will use uWSGI as a server and NGINX server in front of it
-for serving static files efficiently and we will forward dynamic
-requests to uWSGI workers. After implementation uWSGI with NGINX
-we can access to server by <http://localhost/>, because we are
-accessing the host through the standard HTTP port 80.
 
-Add following line to /etc/hosts file:
-    127.0.0.1	educaproject.com www.educaproject.com
-By doing so, you are routing the upper 2 hostnames to our local
-server.
-
-We use NGINX to server static files in our production environment.
-In order to collect all of static files:
-1. Add STATIC_ROOT directory to base.py file.
-2. docker compose up
-3. docker compose exec web python /code/educa/manage.py collectstatic 
-    or 
-    python manage.py collectstatic --settings=educa.settings.local
-Thus /static/ and /media/ paths are now served by NGINX directly,
-/ path are passed by NGINX to uWSGI through the UNIX socket.
 
 
 Checking.
