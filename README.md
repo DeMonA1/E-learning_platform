@@ -77,7 +77,7 @@ only display on this IP address)
 > for our case, it's not appropriate way, because of content management
 > views for instructors.
 
-### NGINX and uWSGI
+### :diamond_shape_with_a_dot_inside: NGINX and uWSGI
 We will use ***uWSGI*** as a server and ***NGINX*** server in front of it
 for serving static files efficiently and we will forward dynamic
 requests to uWSGI workers. After implementation uWSGI with NGINX
@@ -94,21 +94,36 @@ server.
 We use NGINX to server static files in our production environment.
 In order to collect all of static files:
 1. Add ***STATIC_ROOT*** directory to the ***base.py*** file.
-2.```
-docker compose up```
-4. docker compose exec web python /code/educa/manage.py collectstatic 
-    or 
-    python manage.py collectstatic --settings=educa.settings.local
+2.Run the following command:
+```
+docker compose up
+```
+3. Run the following command:
+```
+docker compose exec web python /code/educa/manage.py collectstatic
+```
+or
+```
+python manage.py collectstatic --settings=educa.settings.local
+```
 Thus /static/ and /media/ paths are now served by NGINX directly,
-/ path are passed by NGINX to uWSGI through the UNIX socket.
+'/' path are passed by NGINX to uWSGI through the UNIX socket.
 
-## About API
+### :lock: SSL/TLS
+Generate SSL/TLS certificate:
+```
+ openssl req -x509 -newkey rsa:2048 -sha256 -days 3650 -nodes \
+  -keyout ssl/educa.key -out ssl/educa.crt \
+  -subj '/CN=*.educaproject.com' \
+  -addext 'subjectAltName=DNS:*.educaproject.com'
+```
+## :chains: About API
 - Using curl for interaction.
 - http://127.0.0.1:8000/api/subjects/ - list of subject or + id => detail
 - Pagination. You can pass parameters ***page*** and ***page_size*** for test in URL like:
 <http://127.0.0.1:8000/api/subjects/?page=2&page_size=2>
 
-## About Chat server
+## :mailbox: About Chat server
 For chat(<http://127.0.0.1:8000/chat/room/1/>) server we need:
 1. Set up a consumer (read/write messages to a communication channel)
 2. Configure routing (allow us to combine and stack our consumers)
@@ -131,7 +146,7 @@ Add to the ***settings.py*** **CHANNEL_LAYERS** setting ('BACKEND': 'channels_re
 ```
 - [x] In order to test chat, open browser another tab in private mode.
 
-## Docker compose
+## :whale: Docker compose
 In order to docker compose up:
 1. Use <ins>***wait-for-it.sh***</ins> to wait for db host be ready and accept
 connections on port 5432 before starting Django server.
@@ -150,44 +165,44 @@ docker compose exec web python /code/educa/manage.py migrate
 docker compose exec web python /code/educa/manage.py createsuperuser
 ```
 
-
-
-
-Checking.
+## :toolbox: About checking.
 Django includes a system check framework for valdating our project,
 that inspects the applications installed in Django project and detects
 common problems. Launch check:
-    python manage.py check --settings=educa.settings.prod
+```
+python manage.py check --settings=educa.settings.prod
+```
 For production deployment:
-    python manage.py check --deploy --settings=educa.settings.prod
+```
+python manage.py check --deploy --settings=educa.settings.prod
+```
 
-
-SSL/TLS
-Generate SSL/TLS certificate:
-    openssl req -x509 -newkey rsa:2048 -sha256 -days 3650 -nodes \
-    -keyout ssl/educa.key -out ssl/educa.crt \
-    -subj '/CN=*.educaproject.com' \
-    -addext 'subjectAltName=DNS:*.educaproject.com'
-
-
-Subdomain (subdomain.educaproject.com)
+## :mirror: Subdomain (<subdomain>.educaproject.com)
 For testing custom middleware with a Course object with the slug first,
-add the following line to /etc/hosts file:
-    127.0.0.1 first.educaproject.com
+add the following line to ***/etc/hosts*** file:
+```
+127.0.0.1 first.educaproject.com
+```
 
-
+## :abacus: Django custom management command
 Send masss reminder to users by email.
 In order to make Django output emails to the standard ouput during
 development, add it to base.py file:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+```
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+```
 Management command in container:
-    docker compose exec web python /code/educa/manage.py \
-    enroll_reminder --days=20 --settings=educa.settings.prod
+```
+docker compose exec web python /code/educa/manage.py \
+  enroll_reminder --days=20 --settings=educa.settings.prod
+```
 We can run management commands from code as follows:
-    from django.core import management
-    management.call_command('enroll_reminder', days=20)
+```
+from django.core import management
+management.call_command('enroll_reminder', days=20)
+```
 Django management command can be scheduled to run automatically
-using cron or Celery Beat.
-
-For local tests, you need to comment subdomain_course_middleware in 
-MIDDLEWARE constant in base.py settings file.
+using ***cron*** or ***Celery Beat***.
+> [!WARNING]
+> For local tests, you need to comment subdomain_course_middleware in 
+> ***MIDDLEWARE*** constant in the ***base.py*** settings file.
